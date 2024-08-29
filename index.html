@@ -214,30 +214,7 @@
 
     <section class="content">
         <h2>تسجيل الطلاب</h2>
-        <form id="studentForm">
-            <label for="lastname">اللقب:</label>
-            <input type="text" id="lastname" name="lastname" placeholder="أدخل اللقب">
         
-            <label for="firstname">الاسم:</label>
-            <input type="text" id="firstname" name="firstname" placeholder="أدخل الاسم">
-        
-            <label for="phone">رقم الهاتف:</label>
-            <input type="tel" id="phone" name="phone" required placeholder="0552 65 60 78" oninput="formatPhoneNumber(this)">
-        
-            <label for="birthdate">تاريخ الازدياد:</label>
-            <input type="date" id="birthdate" name="birthdate">
-        
-            <label for="gender">الجنس:</label>
-            <select id="gender" name="gender">
-                <option value="ذكر">ذكر</option>
-                <option value="أنثى">أنثى</option>
-            </select>
-        
-            <label for="level">المستوى:</label>
-            <input type="text" id="level" name="level" placeholder="أدخل المستوى">
-        
-            <button type="button" onclick="addStudent()">إضافة الطالب</button>
-        </form>
         <script>
             async function addStudent() {
                 const lastname = document.getElementById('lastname').value;
