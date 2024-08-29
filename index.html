@@ -202,31 +202,50 @@
 </footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const phoneInput = document.getElementById('phone');
-
-    phoneInput.addEventListener('input', function(e) {
-        let value = e.target.value.replace(/\D/g, ''); // إزالة أي غير الأرقام
-        if (value.length > 10) {
-            value = value.slice(0, 10); // التأكد من أن العدد لا يتجاوز 10 أرقام
-        }
-        let formattedValue = '';
-        if (value.length > 0) {
-            formattedValue = value.slice(0, 4); // أربعة أرقام أولى
-        }
-        if (value.length > 4) {
-            formattedValue += ' ' + value.slice(4, 6); // مجموعة من رقمين بعد أول أربعة أرقام
-        }
-        if (value.length > 6) {
-            formattedValue += ' ' + value.slice(6, 8); // مجموعة من رقمين بعد المجموعتين السابقتين
-        }
-        if (value.length > 8) {
-            formattedValue += ' ' + value.slice(8); // مجموعة من رقمين في النهاية
-        }
-        e.target.value = formattedValue; // تحديث الحقل بالقيمة المنسقة
+    // تعطيل النقر بزر الماوس الأيمن
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
     });
-});
+
+    // تعطيل التحديد
+    document.onselectstart = function () {
+        return false;
+    };
+
+    // تعطيل اختصارات لوحة المفاتيح مثل Ctrl+C
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) {
+            e.preventDefault();
+        }
+    });
+
+    // تنسيق رقم الهاتف
+    document.addEventListener('DOMContentLoaded', function() {
+        const phoneInput = document.getElementById('phone');
+
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // إزالة أي شيء غير الأرقام
+            if (value.length > 10) {
+                value = value.slice(0, 10); // التأكد من أن العدد لا يتجاوز 10 أرقام
+            }
+            let formattedValue = '';
+            if (value.length > 0) {
+                formattedValue = value.slice(0, 4); // أربعة أرقام أولى
+            }
+            if (value.length > 4) {
+                formattedValue += ' ' + value.slice(4, 6); // مجموعة من رقمين بعد أول أربعة أرقام
+            }
+            if (value.length > 6) {
+                formattedValue += ' ' + value.slice(6, 8); // مجموعة من رقمين بعد المجموعتين السابقتين
+            }
+            if (value.length > 8) {
+                formattedValue += ' ' + value.slice(8); // مجموعة من رقمين في النهاية
+            }
+            e.target.value = formattedValue; // تحديث الحقل بالقيمة المنسقة
+        });
+    });
 </script>
+
 
 </body>
 </html>
