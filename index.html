@@ -240,7 +240,7 @@
         </form>
         
         <script>
-            // تعطيل النقر بزر الماوس الأيمن
+                // تعطيل النقر بزر الماوس الأيمن
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
     });
@@ -309,8 +309,6 @@
             }
         </script>
         
-
-        
     </section>
 </div>
 
@@ -318,32 +316,7 @@
     <p>&copy; 2024 موقع التدريس الخاص بي. جميع الحقوق محفوظة.</p>
 </footer>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const phoneInput = document.getElementById('phone');
 
-    phoneInput.addEventListener('input', function(e) {
-        let value = e.target.value.replace(/\D/g, '');
-        if (value.length > 10) {
-            value = value.slice(0, 10);
-        }
-        let formattedValue = '';
-        if (value.length > 0) {
-            formattedValue = value.slice(0, 4);
-        }
-        if (value.length > 4) {
-            formattedValue += ' ' + value.slice(4, 6);
-        }
-        if (value.length > 6) {
-            formattedValue += ' ' + value.slice(6, 8);
-        }
-        if (value.length > 8) {
-            formattedValue += ' ' + value.slice(8);
-        }
-        e.target.value = formattedValue;
-    });
-});
-</script>
 
 </body>
 </html>
