@@ -33,20 +33,30 @@
             margin: 10px 0;
         }
 
-        .cta-button {
-            display: inline-block;
-            background: #33AEFF;
-            color: #fff;
-            padding: 10px 20px;
-            margin-top: 15px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
+        .header-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* المسافة بين الأزرار */
+}
 
-        .cta-button:hover {
-            background: #0062E6;
-        }
+.cta-button {
+    display: inline-block;
+    background: #33AEFF;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+    text-align: center; /* التأكد من محاذاة النص في المركز */
+    font-size: 1em; /* ضبط حجم الخط */
+    width: 150px; /* تحديد عرض الزر */
+    height: 50px; /* تحديد ارتفاع الزر */
+    line-height: 50px; /* محاذاة النص عموديًا */
+}
+
+.cta-button:hover {
+    background: #0062E6;
+}
 
         .navbar {
             display: flex;
