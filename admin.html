@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الطلاب</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+            background-color: #f4f4f9;
+            direction: rtl;
+            text-align: right;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        form input[type="text"], form input[type="date"], form select, form input[type="password"], form input[type="tel"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: right;
+        }
+
+        form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        form button:hover {
+            background-color: #218838;
+        }
+
+        input[type="text"]::placeholder, input[type="password"]::placeholder, input[type="tel"]::placeholder {
+            color: #999;
+            text-align: right;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: right;
+        }
+
+        th {
+            background-color: #f8f8f8;
+        }
+
+        input#searchInput {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: right;
+        }
+
+        @media (max-width: 600px) {
+            form, table {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+
+        .action-buttons button {
+            margin: 2px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .edit-button {
+            background-color: #ffc107;
+            color: #fff;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .phone-cell {
+            direction: ltr; /* تأكد من عرض رقم الهاتف من اليمين لليسار */
+        }
+    </style>
+</head>
+<body>
+    <h2>تسجيل الدخول</h2>
+    <form id="loginForm">
+        <label for="password">كلمة المرور:</label>
+        <input type="password" id="password" placeholder="أدخل كلمة المرور">
+        <button type="button" onclick="checkPassword()">تسجيل الدخول</button>
+    </form>
+
+    <div id="adminContent" style="display:none;">
+        <h2>إدارة الطلاب</h2>
+        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="ابحث...">
+        <h2>قائمة الطلاب</h2>
+        <table id="studentsTable">
+            <thead>
+                <tr>
+                    <th>اللقب</th>
+                    <th>الاسم</th>
+                    <th>تاريخ الازدياد</th>
+                    <th>الجنس</th>
+                    <th>المستوى</th>
+                    <th>رقم الهاتف</th>
+                    <th>التحكم</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- هنا سيتم إضافة صفوف الطلاب -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+
+         // تعطيل النقر بزر الماوس الأيمن
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    // تعطيل التحديد
+    document.onselectstart = function () {
+        return false;
+    };
+
+    // تعطيل اختصارات لوحة المفاتيح مثل Ctrl+C
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) {
+            e.preventDefault();
+        }
+    });
+    
+        const adminPassword = "12345"; // يجب أن تغير كلمة المرور هنا
+
+        function checkPassword() {
+            const inputPassword = document.getElementById('password').value;
+            if (inputPassword === adminPassword) {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                loadStudents();
+            } else {
+                alert('كلمة المرور غير صحيحة!');
+            }
+        }
+
+        function loadStudents() {
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+            students.forEach((student, index) => appendStudentToTable(student, index));
+        }
+
+        function appendStudentToTable(student, index) {
+            const studentsTable = document.getElementById('studentsTable').getElementsByTagName('tbody')[0];
+            const newRow = studentsTable.insertRow();
+            newRow.setAttribute('data-index', index);
+            newRow.insertCell(0).appendChild(document.createTextNode(student.lastname));
+            newRow.insertCell(1).appendChild(document.createTextNode(student.firstname));
+            newRow.insertCell(2).appendChild(document.createTextNode(student.birthdate));
+            newRow.insertCell(3).appendChild(document.createTextNode(student.gender));
+            newRow.insertCell(4).appendChild(document.createTextNode(student.level));
+
+            // عرض رقم الهاتف من اليمين لليسار
+            const phoneCell = newRow.insertCell(5);
+            phoneCell.className = 'phone-cell'; // إضافة فئة CSS لرقم الهاتف
+            phoneCell.appendChild(document.createTextNode(student.phone));
+
+            const actionCell = newRow.insertCell(6);
+            const editButton = document.createElement('button');
+            editButton.className = 'edit-button';
+            editButton.innerText = 'تعديل';
+            editButton.onclick = () => editStudent(index);
+            actionCell.appendChild(editButton);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'delete-button';
+            deleteButton.innerText = 'حذف';
+            deleteButton.onclick = () => deleteStudent(index);
+            actionCell.appendChild(deleteButton);
+        }
+
+        function searchTable() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.getElementById('studentsTable').getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let match = false;
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].innerHTML.toLowerCase().indexOf(searchInput) > -1) {
+                        match = true;
+                        break;
+                    }
+                }
+                rows[i].style.display = match ? '' : 'none';
+            }
+        }
+
+        function editStudent(index) {
+            alert('تعديل الطالب برقم ' + index); // يمكنك تنفيذ عملية تعديل الطالب هنا
+        }
+
+        function deleteStudent(index) {
+            let students = JSON.parse(localStorage.getItem('students'));
+            students.splice(index, 1);
+            localStorage.setItem('students', JSON.stringify(students));
+            reloadTable();
+        }
+
+        function reloadTable() {
+            const studentsTableBody = document.getElementById('studentsTable').getElementsByTagName('tbody')[0];
+            studentsTableBody.innerHTML = '';
+            loadStudents();
+        }
+    </script>
+</body>
+</html>
