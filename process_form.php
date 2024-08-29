@@ -1,12 +1,12 @@
 <?php
 // ملف process_form.php
 
-// بيانات النموذج
-$name = $_POST['name'];
-$email = $_POST['email'];
-$phone = $_POST['phone'];
-$subject = $_POST['subject'];
-$message = $_POST['message'];
+// التحقق من القيم المدخلة
+$name = htmlspecialchars($_POST['name']);
+$email = htmlspecialchars($_POST['email']);
+$phone = htmlspecialchars($_POST['phone']);
+$subject = htmlspecialchars($_POST['subject']);
+$message = htmlspecialchars($_POST['message']);
 
 // إعداد البريد الإلكتروني
 $emailTo = 'rekabrayen@gmail.com';
@@ -26,10 +26,14 @@ $emailBody = "<html>
 </body>
 </html>";
 
-// إرسال البريد الإلكتروني
-mail($emailTo, $emailSubject, $emailBody, $emailHeaders);
+// إرسال البريد الإلكتروني والتحقق من نجاح الإرسال
+if(mail($emailTo, $emailSubject, $emailBody, $emailHeaders)) {
+    echo 'تم إرسال البريد الإلكتروني بنجاح!';
+} else {
+    echo 'حدث خطأ أثناء إرسال البريد الإلكتروني.';
+}
 
-// إعداد الرسالة النصية
+// إعداد الرسالة النصية باستخدام Twilio
 require_once 'vendor/autoload.php';
 use Twilio\Rest\Client;
 
@@ -48,12 +52,11 @@ $client->messages->create(
     ['from' => $twilioNumber, 'body' => $userMessage]
 );
 
-// إرسال رسالة إليك
+// إرسال رسالة إلى الرقم الذي ترغب به
 $client->messages->create(
-    $emailTo,
+    'YOUR_PHONE_NUMBER',
     ['from' => $twilioNumber, 'body' => $notificationMessage]
 );
 
 echo 'تم إرسال الرسائل بنجاح!';
 ?>
-
