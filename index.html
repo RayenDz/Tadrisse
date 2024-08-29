@@ -34,29 +34,29 @@
         }
 
         .header-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px; /* المسافة بين الأزرار */
-}
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* المسافة بين الأزرار */
+        }
 
-.cta-button {
-    display: inline-block;
-    background: #33AEFF;
-    color: #fff;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background 0.3s;
-    text-align: center; /* التأكد من محاذاة النص في المركز */
-    font-size: 1em; /* ضبط حجم الخط */
-    width: 150px; /* تحديد عرض الزر */
-    height: 50px; /* تحديد ارتفاع الزر */
-    line-height: 50px; /* محاذاة النص عموديًا */
-}
+        .cta-button {
+            display: inline-block;
+            background: #33AEFF;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            text-align: center; /* التأكد من محاذاة النص في المركز */
+            font-size: 1em; /* ضبط حجم الخط */
+            width: 100px; /* تحديد عرض الزر */
+            height: 30px; /* تحديد ارتفاع الزر */
+            line-height: 50px; /* محاذاة النص عموديًا */
+        }
 
-.cta-button:hover {
-    background: #0062E6;
-}
+        .cta-button:hover {
+            background: #0062E6;
+        }
 
         .navbar {
             display: flex;
@@ -167,7 +167,7 @@
     <p>تدريس اللغة الإسبانية، علوم طبيعية، الرياضيات، والإعلام الآلي</p>
     <div class="header-buttons">
         <a href="#contact" class="cta-button">سجّل الآن</a>
-        <a href="admin.html" class="cta-button">عرض المستخدمين</a> <!-- زر عرض المستخدمين -->
+        <a href="admin.html">عرض المستخدمين</a>
     </div>
 </header>
 
@@ -240,23 +240,6 @@
         </form>
         
         <script>
-            
-    // تعطيل النقر بزر الماوس الأيمن
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-    });
-
-    // تعطيل التحديد
-    document.onselectstart = function () {
-        return false;
-    };
-
-    // تعطيل اختصارات لوحة المفاتيح مثل Ctrl+C
-    document.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) {
-            e.preventDefault();
-        }
-    });
             function formatPhoneNumber(input) {
                 // إزالة أي أحرف غير الأرقام
                 let value = input.value.replace(/\D/g, '');
